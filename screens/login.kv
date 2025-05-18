@@ -1,0 +1,32 @@
+<LoginScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+
+        Label:
+            text: 'SterenPOS'
+            font_size: '28sp'
+            size_hint_y: None
+            height: '50dp'
+
+        TextInput:
+            id: correo
+            hint_text: 'Correo'
+            multiline: False
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: contrasena
+            hint_text: 'Contraseña'
+            password: True
+            multiline: False
+            size_hint_y: None
+            height: '40dp'
+
+        Button:
+            text: 'Entrar'
+            size_hint_y: None
+            height: '40dp'
+            on_press: root.login()

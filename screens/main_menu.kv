@@ -1,0 +1,28 @@
+<MainMenuScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+        Label:
+            text: "Bienvenido al Sistema SterenPOS"
+            font_size: 24
+        Button:
+            id: btn_productos
+            text: "Gestionar Productos"
+            on_press: root.manager.current = 'productos'
+        Button:
+            id: btn_usuarios
+            text: "Gestionar Usuarios"
+            on_press: root.manager.current = 'usuarios'
+        Button:
+            text: "Gestionar Clientes"
+            on_press: root.manager.current = 'clientes'
+        Button:
+            text: "Gestionar Proveedores"
+            on_press: root.manager.current = 'proveedores'
+        Button:
+            text: "Realizar Venta"
+            on_press: root.manager.current = 'ventas'
+        Button:
+            text: "Salir"
+            on_press: app.stop()

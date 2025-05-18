@@ -1,0 +1,51 @@
+<VentasScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        # Barra de navegación
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            spacing: 5
+
+            Button:
+                text: 'Productos'
+                on_press: root.manager.current = 'productos'
+            Button:
+                text: 'Usuarios'
+                on_press: root.manager.current = 'usuarios'
+            Button:
+                text: 'Clientes'
+                on_press: root.manager.current = 'clientes'
+            Button:
+                text: 'Proveedores'
+                on_press: root.manager.current = 'proveedores'
+            Button:
+                text: 'Ventas'
+                on_press: root.manager.current = 'ventas'
+
+        # Listado de ventas con etiquetas en español
+        RecycleView:
+            id: rv
+            viewclass: 'Label'
+
+            RecycleBoxLayout:
+                orientation: 'vertical'
+                default_size: None, dp(48)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+
+        # Botones de acción en español
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: 10
+            padding: 10
+
+            Button:
+                text: 'Registrar Venta'
+                on_press: root.nueva_venta()
+            Button:
+                text: 'Ver Historial'
+                on_press: root.historial()
