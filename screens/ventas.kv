@@ -1,51 +1,107 @@
 <VentasScreen>:
     BoxLayout:
         orientation: 'vertical'
+        spacing: 10
+        padding: 10
 
-        # Barra de navegación
         BoxLayout:
             size_hint_y: None
-            height: '40dp'
-            spacing: 5
+            height: 40
+            spacing: 10
+            Button:
+                id: usuario_btn
+                text: "Seleccionar Usuario"
+                on_release: root.mostrar_popup_usuarios()
+            Button:
+                id: cliente_btn
+                text: "Seleccionar Cliente"
+                on_release: root.mostrar_popup_clientes()
 
-            Button:
-                text: 'Productos'
-                on_press: root.manager.current = 'productos'
-            Button:
-                text: 'Usuarios'
-                on_press: root.manager.current = 'usuarios'
-            Button:
-                text: 'Clientes'
-                on_press: root.manager.current = 'clientes'
-            Button:
-                text: 'Proveedores'
-                on_press: root.manager.current = 'proveedores'
-            Button:
-                text: 'Ventas'
-                on_press: root.manager.current = 'ventas'
+        TextInput:
+            id: codigo_input
+            hint_text: "Escanear/Buscar producto..."
+            multiline: False
+            on_text_validate: root.agregar_producto_por_codigo(self.text)
+            focus: True
 
-        # Listado de ventas con etiquetas en español
         RecycleView:
-            id: rv
+            id: carrito_rv
             viewclass: 'Label'
-
             RecycleBoxLayout:
-                orientation: 'vertical'
-                default_size: None, dp(48)
+                default_size: None, dp(56)
                 default_size_hint: 1, None
                 size_hint_y: None
                 height: self.minimum_height
+                orientation: 'vertical'
 
-        # Botones de acción en español
         BoxLayout:
             size_hint_y: None
-            height: '50dp'
-            spacing: 10
-            padding: 10
+            height: 40
+            Label:
+                id: subtotal_label
+                text: "Subtotal: $0.00"
+            Label:
+                id: iva_label
+                text: "IVA (16%): $0.00"
+            Label:
+                id: total_label
+                text: "Total: $0.00"
 
+        BoxLayout:
+            size_hint_y: None
+            height: 40
             Button:
-                text: 'Registrar Venta'
-                on_press: root.nueva_venta()
+                id: modo_pago_btn
+                text: "Seleccionar Pago"
+                on_release: root.seleccionar_modo_pago(1)
             Button:
-                text: 'Ver Historial'
-                on_press: root.historial()
+                text: "Tarjeta"
+                on_release: root.seleccionar_modo_pago(2)
+            Button:
+                text: "Transferencia"
+                on_release: root.seleccionar_modo_pago(3)
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            Button:
+                text: "Finalizar Venta"
+                on_release: root.finalizar_venta()
+            Button:
+                text: "Historial de Ventas"
+                on_release: root.manager.current = 'historial_ventas'
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            Button:
+                text: "Regresar"
+                on_release: root.manager.current = 'productos'
+
+<HistorialVentasScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 10
+
+        Label:
+            text: "Historial de Ventas"
+            font_size: '20sp'
+            size_hint_y: None
+            height: 40
+
+        RecycleView:
+            id: rv_ventas
+            viewclass: 'Label'
+            RecycleBoxLayout:
+                default_size: None, dp(56)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+
+        Button:
+            text: "Regresar"
+            size_hint_y: None
+            height: 40
+            on_release: root.manager.current = 'ventas'

@@ -189,8 +189,8 @@ CREATE TABLE IF NOT EXISTS `SterenPOS`.`Ventas` (
   `UsuarioID` INT NOT NULL,
   `ModoPagoID` INT NOT NULL,
   `Subtotal` DECIMAL(10,2) NOT NULL,
-  `IVA` DECIMAL(10,2) GENERATED ALWAYS AS (`Subtotal` * 0.16) STORED,
-  `Total` DECIMAL(10,2) GENERATED ALWAYS AS (`Subtotal` * 1.16) STORED,
+  `IVA` DECIMAL(10,2) GENERATED ALWAYS AS (`Subtotal` * 0.16) STORED,  -- ✅ Columna generada
+  `Total` DECIMAL(10,2) GENERATED ALWAYS AS (`Subtotal` * 1.16) STORED, -- ✅ Columna generada
   `Devolucion` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`VentaID`),
   INDEX `fk_Ventas_Clientes1_idx` (`ClienteID` ASC) VISIBLE,
@@ -210,8 +210,8 @@ CREATE TABLE IF NOT EXISTS `SterenPOS`.`Ventas` (
     FOREIGN KEY (`ModoPagoID`)
     REFERENCES `SterenPOS`.`ModoPago` (`ModoPagoID`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `SterenPOS`.`DetalleVenta`
@@ -270,7 +270,27 @@ INSERT INTO `Categorias` (`Nombre`) VALUES
 -- Productos
 INSERT INTO `Productos` (`Codigo`, `Nombre`, `Descripcion`, `Precio`, `Costo`, `Stock`, `MarcaID`, `CategoriaID`, `ProveedorID`) VALUES 
 ('PROD001', 'Multímetro Digital', 'Multímetro profesional 6000 conteos', 499.00, 250.00, 50, 1, 1, 1),
-('PROD002', 'Juego de Destornilladores', '6 piezas con mangos anti-deslizantes', 199.50, 80.00, 100, 2, 2, 2);
+('PROD002', 'Juego de Destornilladores', '6 piezas con mangos anti-deslizantes', 199.50, 80.00, 100, 2, 2, 2),
+('PROD003', 'Soldador de precisión', 'Soldador con temperatura ajustable 200-450°C', 349.99, 150.00, 80, 1, 2, 1),
+('PROD004', 'Cortadores de alambre', 'Juego de 3 cortadores de cobre', 149.50, 60.00, 120, 2, 2, 2),
+('PROD005', 'Fuente de poder 12V', 'Fuente regulada 12V 2A', 299.00, 120.00, 60, 1, 1, 1),
+('PROD006', 'Cable HDMI 2m', 'Versión 2.1, oro 24k', 129.99, 50.00, 200, 2, 3, 2),
+('PROD007', 'Multitool 10 piezas', 'Herramientas en una sola unidad', 199.00, 85.00, 90, 2, 2, 2),
+('PROD008', 'Caja de herramientas', '60 piezas, acero al carbono', 599.00, 250.00, 40, 1, 2, 1),
+('PROD009', 'Termómetro digital', 'Para soldadores y equipos electrónicos', 249.00, 100.00, 70, 1, 1, 1),
+('PROD010', 'Cable USB-C a USB-C', '2m, 100W, carga rápida', 89.99, 35.00, 150, 2, 3, 2),
+('PROD011', 'Destornillador eléctrico', 'Con 10 puntas intercambiables', 429.50, 180.00, 30, 1, 2, 1),
+('PROD012', 'Kit de soldadura', 'Soldador + pasta conductiva', 399.00, 160.00, 50, 1, 2, 1),
+('PROD013', 'Cable coaxial RG6', '50m, blindado doble', 199.00, 75.00, 100, 2, 3, 2),
+('PROD014', 'Pinza de punta fina', '8", mango ergonómico', 99.00, 40.00, 110, 2, 2, 2),
+('PROD015', 'Adaptador VGA-HDMI', 'Convertidor activo con alimentación', 179.00, 70.00, 65, 1, 3, 1),
+('PROD016', 'Caja de fusibles', '20 unidades, 250V', 89.50, 35.00, 90, 2, 2, 2),
+('PROD017', 'Cámara IP 1080p', 'Conexión PoE, visión nocturna', 899.00, 400.00, 25, 1, 1, 1),
+('PROD018', 'Cable de red Cat6', '3m, blindado SFTP', 79.99, 30.00, 180, 2, 3, 2),
+('PROD019', 'Estación de trabajo', 'Soldador + extractor de aire', 749.00, 320.00, 20, 1, 2, 1),
+('PROD020', 'Lupa LED', '8x de aumento con luz', 149.00, 60.00, 75, 2, 2, 2),
+('PROD021', 'Cable DisplayPort', '1.4, 8K, 2m', 199.00, 80.00, 90, 1, 3, 1),
+('PROD022', 'Tester de cables', 'Verifica RJ45/RJ11', 299.00, 120.00, 45, 1, 2, 1);
 
 -- Clientes
 INSERT INTO `Clientes` (`Nombre`, `RFC`, `Telefono`, `Direccion`, `Email`) VALUES 
