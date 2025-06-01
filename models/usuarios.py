@@ -2,21 +2,28 @@ from db import conectar
 from utils import mostrar_popup
 from kivy.uix.recycleview import RecycleView
 
-def ver_usuarios_gui(rv: RecycleView):
-    conn = conectar(); cur = conn.cursor(dictionary=True)
+from db import conectar
+
+def ver_usuarios_gui(rv):
+    conn = conectar()
+    cur = conn.cursor(dictionary=True)
     try:
-        cur.execute("""
-            SELECT u.UsuarioID, u.Nombre, u.Correo, r.Nombre AS Rol
-            FROM usuarios u
-            JOIN roles r ON u.RolID = r.RolID
-        """)
-        rv.data = [{
-            'text': f"{r['UsuarioID']} | {r['Nombre']} | {r['Correo']} | {r['Rol']}"
-        } for r in cur.fetchall()]
-    except Exception as e:
-        mostrar_popup('Error al listar usuarios', str(e))
+        cur.execute("SELECT UsuarioID, Nombre FROM Usuarios")
+        rv.data = [{'text': row['Nombre']} for row in cur.fetchall()]
     finally:
-        cur.close(); conn.close()
+        cur.close()
+        conn.close()
+
+def obtener_usuarios(callback):
+    """Obtiene lista de usuarios para la pantalla de ventas"""
+    conn = conectar()
+    cur = conn.cursor(dictionary=True)
+    try:
+        cur.execute("SELECT UsuarioID, Nombre FROM Usuarios")
+        callback(cur.fetchall())
+    finally:
+        cur.close()
+        conn.close()
 
 def agregar_usuario(datos):
     conn = conectar(); cur = conn.cursor()

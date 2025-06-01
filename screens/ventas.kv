@@ -52,7 +52,7 @@
             height: 40
             Button:
                 id: modo_pago_btn
-                text: "Seleccionar Pago"
+                text: "Efectivo"
                 on_release: root.seleccionar_modo_pago(1)
             Button:
                 text: "Tarjeta"
@@ -90,15 +90,23 @@
             size_hint_y: None
             height: 40
 
+        Label:
+            text: "Haga clic en cualquier venta para ver detalles"
+            font_size: '14sp'
+            color: 0.7, 0.7, 0.7, 1
+            size_hint_y: None
+            height: 30
+
         RecycleView:
             id: rv_ventas
-            viewclass: 'Label'
+            viewclass: 'VentaHistorialItem'
             RecycleBoxLayout:
                 default_size: None, dp(56)
                 default_size_hint: 1, None
                 size_hint_y: None
                 height: self.minimum_height
                 orientation: 'vertical'
+                spacing: 2
 
         Button:
             text: "Regresar"

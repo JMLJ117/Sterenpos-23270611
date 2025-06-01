@@ -2,17 +2,26 @@ from db import conectar
 from utils import mostrar_popup
 from kivy.uix.recycleview import RecycleView
 
-def ver_clientes_gui(rv: RecycleView):
-    conn = conectar(); cur = conn.cursor(dictionary=True)
+def ver_clientes_gui(rv):
+    conn = conectar()
+    cur = conn.cursor(dictionary=True)
     try:
-        cur.execute("SELECT ClienteID, Nombre, Telefono, Direccion FROM clientes")
-        rv.data = [{
-            'text': f"{r['ClienteID']} | {r['Nombre']} | {r['Telefono']} | {r['Direccion']}"
-        } for r in cur.fetchall()]
-    except Exception as e:
-        mostrar_popup('Error al listar clientes', str(e))
+        cur.execute("SELECT ClienteID, Nombre FROM Clientes")
+        rv.data = [{'text': row['Nombre']} for row in cur.fetchall()]
     finally:
-        cur.close(); conn.close()
+        cur.close()
+        conn.close()
+
+def obtener_clientes(callback):
+    """Obtiene lista de clientes para la pantalla de ventas"""
+    conn = conectar()
+    cur = conn.cursor(dictionary=True)
+    try:
+        cur.execute("SELECT ClienteID, Nombre FROM Clientes")
+        callback(cur.fetchall())
+    finally:
+        cur.close()
+        conn.close()
 
 def agregar_cliente(datos):
     conn = conectar(); cur = conn.cursor()
